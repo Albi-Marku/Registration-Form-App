@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration-form-app
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: registration-form-app
+  template:
+    metadata:
+      labels:
+        app: registration-form-app
+    spec:
+      containers:
+        - name: registration-form-app
+          image: dockerappregistry1.azurecr.io/registrationformapp:test
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: app-secrets
