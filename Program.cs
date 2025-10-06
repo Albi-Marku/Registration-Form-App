@@ -27,4 +27,4 @@ app.MapControllerRoute(
 );
 
 // Listen on all interfaces inside the container
-app.Run("http://0.0.0.0:80");
+app.Run("http://0.0.0.0:8080");

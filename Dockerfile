@@ -17,6 +17,9 @@ WORKDIR /app
 # Copy the published output from the build image
 COPY --from=build /app/out ./
 
+# Set the port the app will listen on
+ENV ASPNETCORE_URLS=http://+:8080
+
 # Expose the port your app runs on
 EXPOSE 8080
 
