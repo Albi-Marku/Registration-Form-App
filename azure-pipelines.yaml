@@ -8,12 +8,12 @@ variables:
   imageName: registration-form-app
   acrName: dockerappregistry1
   acrLoginServer: dockerappregistry1.azurecr.io
-  tag: '$(Build.BuildId)'  # unique tag per build
+  tag: '$(Build.BuildId)'
 
 stages:
-# -------------------------------
-# Stage 1: Build & Push Docker Image
-# -------------------------------
+# =====================
+# Stage 1: Build & Push
+# =====================
 - stage: BuildAndPush
   displayName: Build & Push Docker Image
   jobs:
@@ -24,36 +24,19 @@ stages:
       steps:
         - task: Checkout@1
 
-        # Login to ACR
-        - task: AzureCLI@2
-          inputs:
-            azureSubscription: 'Your-Azure-Service-Connection'
-            scriptType: 'bash'
-            scriptLocation: 'inlineScript'
-            inlineScript: |
-              echo "Logging in to ACR..."
-              az acr login --name $(acrName)
-
-        # Build Docker image
+        # Build and Push Docker image
         - task: Docker@2
+          displayName: Build & Push
           inputs:
-            containerRegistry: '$(acrName)'
+            containerRegistry: 'dockerappregistry1'  # <-- your ACR service connection
             repository: $(imageName)
-            command: 'build'
+            command: 'buildAndPush'
             Dockerfile: '**/Dockerfile'
             tags: $(tag)
 
-        # Push Docker image
-        - task: Docker@2
-          inputs:
-            containerRegistry: '$(acrName)'
-            repository: $(imageName)
-            command: 'push'
-            tags: $(tag)
-
-# -------------------------------
-# Stage 2: Deploy to Kubernetes
-# -------------------------------
+# =====================
+# Stage 2: Deploy to AKS
+# =====================
 - stage: Deploy
   displayName: Deploy to AKS
   dependsOn: BuildAndPush
@@ -68,8 +51,9 @@ stages:
           deploy:
             steps:
               - task: AzureCLI@2
+                displayName: Deploy to AKS
                 inputs:
-                  azureSubscription: 'Your-Azure-Service-Connection'
+                  azureSubscription: $(if eq(variables['Build.SourceBranchName'], 'main') 'Azure-Connection-production-environment' else 'Azure-Connection-test-environment')
                   scriptType: 'bash'
                   scriptLocation: 'inlineScript'
                   inlineScript: |
@@ -79,7 +63,6 @@ stages:
                       kubectl apply -f k8s/prod/secret.yaml
                       kubectl apply -f k8s/prod/postgres-pvc.yaml
                       kubectl apply -f k8s/prod/postgres-statefulset.yaml
-                      # Update Deployment image to the new tag
                       kubectl set image deployment/registration-form-app registration-form-app=$(acrLoginServer)/$(imageName):$(tag)
                       kubectl apply -f k8s/prod/app-service.yaml
                     else
