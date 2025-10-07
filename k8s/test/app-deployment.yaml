@@ -2,9 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: registration-form-app
-  namespace: default
+  labels:
+    app: registration-form-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: registration-form-app
@@ -15,9 +16,12 @@ spec:
     spec:
       containers:
         - name: registration-form-app
-          image: dockerappregistry1.azurecr.io/registrationformapp:test
+          # Use the full ACR path here
+          image: dockerappregistry1.azurecr.io/registration-form-app:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           envFrom:
             - secretRef:
                 name: app-secrets
+      # No need for imagePullSecrets since ACR is attached
+      restartPolicy: Always
