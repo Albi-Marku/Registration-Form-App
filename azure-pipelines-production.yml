@@ -1,0 +1,34 @@
+jobs:
+- job: Build
+  displayName: Build
+  pool:
+    name: Default       # <-- your self-hosted agent pool
+    demands:
+      - agent.name -equals Agent   # <-- optional, if you want a specific agent
+  steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: registration-form-app
+        dockerfile: $(Build.SourcesDirectory)/Dockerfile
+        containerRegistry: dockerappregistry1
+        tags: |
+          $(Build.BuildId)
+
+- job: DeployToAKS
+  displayName: Deploy to AKS Production
+  pool:
+    name: Default
+    demands:
+      - agent.name -equals Agent
+  steps:
+    - task: KubernetesManifest@1
+      displayName: Deploy prod cluster to AKS production resources
+      inputs:
+        action: 'deploy'
+        connectionType: 'azureResourceManager'
+        azureSubscriptionConnection: 'Azure-Connection-production-environment'
+        azureResourceGroup: 'myapp-prod-rg'
+        kubernetesCluster: 'myapp-aks-prod'
+        manifests: 'k8s/prod/*.yaml'
