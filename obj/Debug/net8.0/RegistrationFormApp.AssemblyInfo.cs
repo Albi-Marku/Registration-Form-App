@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RegistrationFormApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f468f46b0d4f55d13f6af9de66493d1b88e8bd03")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c4e32650b17d7c7e21817ae46422072e6b8f26f")]
 [assembly: System.Reflection.AssemblyProductAttribute("RegistrationFormApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RegistrationFormApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
