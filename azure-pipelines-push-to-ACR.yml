@@ -20,6 +20,10 @@ jobs:
 
 
 - job: DeployToAKS
+  pool:
+    name: Default
+    demands:
+      - agent.name -equals Agent
   steps:       
   - task: KubernetesManifest@1
     displayName: Deploy prod cluster to AKS production resources
