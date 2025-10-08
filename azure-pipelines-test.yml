@@ -1,0 +1,39 @@
+trigger:
+  branches:
+    include:
+      - test
+
+jobs:
+- job: Build
+  displayName: Build
+  pool:
+    name: Default
+    demands:
+      - agent.name -equals Agent
+  steps:
+    - task: Docker@2
+      displayName: Build and push image
+      inputs:
+        command: buildAndPush
+        repository: registration-form-app
+        dockerfile: $(Build.SourcesDirectory)/Dockerfile
+        containerRegistry: dockerappregistry1
+        tags: |
+          $(Build.BuildId)-test
+
+- job: DeployToAKS
+  displayName: Deploy to AKS Test
+  pool:
+    name: Default
+    demands:
+      - agent.name -equals Agent
+  steps:
+    - task: KubernetesManifest@1
+      displayName: Deploy test cluster to AKS
+      inputs:
+        action: 'deploy'
+        connectionType: 'azureResourceManager'
+        azureSubscriptionConnection: 'Azure-Connection-test-environment'
+        azureResourceGroup: 'myapp-test-rg'
+        kubernetesCluster: 'myapp-aks-test'
+        manifests: 'k8s/test/*.yaml'
