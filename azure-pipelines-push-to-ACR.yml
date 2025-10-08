@@ -15,3 +15,13 @@ jobs:
       containerRegistry: dockerappregistry1
       tags: |
         $(Build.BuildId)
+
+  - task: KubernetesManifest@1
+    displayName: Deploy prod cluster to AKS production resources
+    inputs:
+      action: 'deploy'
+      connectionType: 'azureResourceManager'
+      azureSubscriptionConnection: 'Azure-Connection-production-environment'
+      azureResourceGroup: 'myapp-prod-rg'
+      kubernetesCluster: 'myapp-aks-prod'
+      manifests: 'k8s/prod/'
