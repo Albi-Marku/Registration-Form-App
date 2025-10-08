@@ -1,3 +1,9 @@
+trigger:
+  branches:
+    include:
+      - main
+
+
 jobs:
 - job: Build
   displayName: Build
