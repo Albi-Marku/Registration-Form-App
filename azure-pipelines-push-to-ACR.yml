@@ -24,4 +24,4 @@ jobs:
       azureSubscriptionConnection: 'Azure-Connection-production-environment'
       azureResourceGroup: 'myapp-prod-rg'
       kubernetesCluster: 'myapp-aks-prod'
-      manifests: 'k8s/prod/'
+      manifests: 'k8s/prod/*.yaml'
