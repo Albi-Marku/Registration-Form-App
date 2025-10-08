@@ -2,7 +2,7 @@ jobs:
 - job: Build
   displayName: Build
   pool:
-    name: MySelfHostedPool       # <-- your self-hosted agent pool
+    name: Default       # <-- your self-hosted agent pool
     demands:
       - agent.name -equals Agent # <-- optional, if you want a specific agent
   steps:
@@ -10,8 +10,8 @@ jobs:
     displayName: Build and push an image to container registry
     inputs:
       command: buildAndPush
-      repository: $(imageRepository)
-      dockerfile: $(dockerfilePath)
-      containerRegistry: $(dockerRegistryServiceConnection)
+      repository: registration-form-app
+      dockerfile: $(Build.SourcesDirectory)/Dockerfile
+      containerRegistry: dockerappregistry1
       tags: |
-        $(tag)
+        $(Build.BuildId)
