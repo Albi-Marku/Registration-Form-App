@@ -1,87 +1,129 @@
 @model RegistrationFormApp.Models.RegisterViewModel
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Register</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #74ABE2, #5563DE);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
         }
 
         .form-container {
             background-color: #fff;
-            padding: 30px 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 350px;
+            padding: 40px 45px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 380px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
         }
 
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #333;
+            font-weight: 600;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         label {
             display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #555;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #444;
         }
 
         input[type="text"], input[type="tel"] {
             width: 100%;
-            padding: 10px;
+            padding: 10px 12px 10px 38px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-size: 15px;
             box-sizing: border-box;
-            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #5563DE;
+            box-shadow: 0 0 0 2px rgba(85, 99, 222, 0.1);
+        }
+
+        .icon {
+            position: absolute;
+            top: 38px;
+            left: 10px;
+            color: #888;
+            font-size: 16px;
         }
 
         .error {
-            color: red;
+            color: #d93025;
             font-size: 12px;
+            margin-top: 3px;
+            display: block;
         }
 
         button {
             width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
+            padding: 12px;
+            background-color: #5563DE;
             color: #fff;
             font-size: 16px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.1s ease;
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #4451c4;
+        }
+
+        button:active {
+            transform: scale(0.98);
         }
 
         .success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
+            background-color: #d1fae5;
+            border: 1px solid #10b981;
             padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            color: #155724;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            color: #065f46;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
         }
     </style>
+
+    <!-- Add Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="form-container">
-        <h2>Simple Form</h2>
+        <h2><i class="fas fa-user-plus"></i> Register</h2>
 
         @if (TempData["Success"] != null)
         {
@@ -91,18 +133,26 @@
         <form asp-action="Register" method="post">
             <div class="form-group">
                 <label asp-for="Name"></label>
-                <input asp-for="Name" type="text" />
+                <i class="fas fa-user icon"></i>
+                <input asp-for="Name" type="text" placeholder="Enter your full name" />
                 <span asp-validation-for="Name" class="error"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="PhoneNumber"></label>
-                <input asp-for="PhoneNumber" type="tel" />
+                <i class="fas fa-phone icon"></i>
+                <input asp-for="PhoneNumber" type="tel" placeholder="Enter your phone number" />
                 <span asp-validation-for="PhoneNumber" class="error"></span>
             </div>
 
-            <button type="submit">Register</button>
+            <button type="submit">
+                <i class="fas fa-paper-plane"></i> Submit
+            </button>
         </form>
+
+        <footer>
+            <p>Hello World</p>
+        </footer>
     </div>
 
     @section Scripts {

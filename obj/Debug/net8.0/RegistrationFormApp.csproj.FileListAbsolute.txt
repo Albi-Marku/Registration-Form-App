@@ -25,3 +25,4 @@ C:\Users\albi.marku\Desktop\RegistrationFormApp\obj\Debug\net8.0\refint\Registra
 C:\Users\albi.marku\Desktop\RegistrationFormApp\obj\Debug\net8.0\RegistrationFormApp.pdb
 C:\Users\albi.marku\Desktop\RegistrationFormApp\obj\Debug\net8.0\RegistrationFormApp.genruntimeconfig.cache
 C:\Users\albi.marku\Desktop\RegistrationFormApp\obj\Debug\net8.0\ref\RegistrationFormApp.dll
+C:\Users\albi.marku\Desktop\RegistrationFormApp\obj\Debug\net8.0\RegistrationFormApp.sourcelink.json

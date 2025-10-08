@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: registration-form-app
+  labels:
+    app: registration-form-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: registration-form-app
+  template:
+    metadata:
+      labels:
+        app: registration-form-app
+    spec:
+      containers:
+        - name: registration-form-app
+          image: dockerappregistry1.azurecr.io/registration-form-app:prod
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: app-secrets
+      # imagePullSecrets is separate from containers
+      imagePullSecrets:
+        - name: acr-secret
+      restartPolicy: Always
