@@ -16,6 +16,11 @@ jobs:
       tags: |
         $(Build.BuildId)
 
+
+
+
+- job: DeployToAKS
+  steps:       
   - task: KubernetesManifest@1
     displayName: Deploy prod cluster to AKS production resources
     inputs:
