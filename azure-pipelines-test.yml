@@ -24,28 +24,6 @@ stages:
           tags: |
             $(Build.BuildId)
 
-<<<<<<< HEAD
-- job: DeployToAKS
-  displayName: Deploy to AKS Test
-  dependsOn: Build                
-  pool:
-    name: Default
-    demands:
-      - agent.name -equals Agent
-  steps:
-    - task: KubernetesManifest@1
-      displayName: Deploy updated image to AKS test cluster
-      inputs:
-        action: 'deploy'
-        connectionType: 'azureResourceManager'
-        azureSubscriptionConnection: 'Azure-Connection-test-environment'
-        azureResourceGroup: 'myapp-test-rg'
-        kubernetesCluster: 'myapp-aks-test'
-        manifests: 'k8s/test/*.yaml'
-        containers: |
-          dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)-test
-        rolloutStatusTimeout: '300'   
-=======
 - stage: DeployStage
   displayName: Deploy Stage
   dependsOn: BuildStage
@@ -62,7 +40,7 @@ stages:
         deploy:
           steps:
             - task: KubernetesManifest@1
-              displayName: Deploy prod cluster to AKS test resources
+              displayName: Deploy test cluster to AKS test resources
               inputs:
                 action: 'deploy'
                 connectionType: 'azureResourceManager'
@@ -73,4 +51,3 @@ stages:
                 containers: |
                   dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)
                 rolloutStatusTimeout: '300'
->>>>>>> 7691c0d6adde57a6d7b84ceb274f2172b1471288
