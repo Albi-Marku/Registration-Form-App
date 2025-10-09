@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: registration-form-app
-          image: dockerappregistry1/registration-form-app:$(Build.BuildId)
+          image: dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)
           ports:
             - containerPort: 80
           envFrom:

@@ -23,5 +23,7 @@ spec:
           envFrom:
             - secretRef:
                 name: app-secrets
+          imagePullSecrets:
+            - name: acr-secret 
       # No need for imagePullSecrets since ACR is attached
       restartPolicy: Always
