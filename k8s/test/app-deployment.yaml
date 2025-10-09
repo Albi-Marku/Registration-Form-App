@@ -17,7 +17,7 @@ spec:
       containers:
         - name: registration-form-app
           # Use the full ACR path here
-          image: dockerappregistry1.azurecr.io/registration-form-app:latest
+          image: dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)
           ports:
             - containerPort: 80
           envFrom:
