@@ -23,7 +23,7 @@ jobs:
 
 - job: DeployToAKS
   displayName: Deploy to AKS Test
-  dependsOn: Build                # ✅ ensures deployment happens only after successful image build
+  dependsOn: Build                
   pool:
     name: Default
     demands:
@@ -40,4 +40,4 @@ jobs:
         manifests: 'k8s/test/*.yaml'
         containers: |
           dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)-test
-        rolloutStatusTimeout: '300'   # ✅ waits for rollout completion (up to 5 min)
+        rolloutStatusTimeout: '300'   
