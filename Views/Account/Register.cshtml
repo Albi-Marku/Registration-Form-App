@@ -4,126 +4,133 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>Register Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Register</title>
+
     <style>
+        :root {
+            --bg: #f4f6fb;
+            --card: #ffffff;
+            --primary: #4451c4;
+            --muted: #6b7280;
+            --error: #d93025;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #74ABE2, #5def19);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            background: linear-gradient(180deg, #eef2ff 0%, #f4fafc 100%);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            min-height:100vh;
+            color: #111827;
         }
 
-        .form-container {
-            background-color: #fff;
-            padding: 40px 45px;
+        .card {
+            width: 420px;
+            max-width: 94%;
+            background: var(--card);
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            width: 380px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 30px;
+            box-shadow: 0 14px 30px rgba(16,24,40,0.08);
         }
 
-        .form-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
-        }
-
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #333;
+        h1 {
+            margin: 0 0 18px 0;
+            font-size: 20px;
+            color: var(--primary);
             font-weight: 600;
+            text-align:center;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
+        .note {
+            text-align:center;
+            color:var(--muted);
+            font-size:13px;
+            margin-bottom:18px;
+        }
+
+        .field {
+            margin-bottom:14px;
         }
 
         label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #444;
+            display:block;
+            font-size:13px;
+            color:var(--muted);
+            margin-bottom:6px;
         }
 
         input[type="text"], input[type="tel"] {
-            width: 100%;
-            padding: 10px 12px 10px 38px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-            box-sizing: border-box;
-            transition: border-color 0.2s ease;
+            width:100%;
+            padding:10px 12px;
+            border-radius:8px;
+            border:1px solid #e6e9ef;
+            background: #fbfdff;
+            font-size:15px;
+            transition: box-shadow .12s, border-color .12s;
         }
 
         input:focus {
-            outline: none;
-            border-color: #5563DE;
-            box-shadow: 0 0 0 2px rgba(85, 99, 222, 0.1);
-        }
-
-        .icon {
-            position: absolute;
-            top: 38px;
-            left: 10px;
-            color: #888;
-            font-size: 16px;
+            outline:none;
+            border-color: var(--primary);
+            box-shadow: 0 6px 18px rgba(68,81,196,0.08);
+            background: #fff;
         }
 
         .error {
-            color: #d93025;
-            font-size: 12px;
-            margin-top: 3px;
-            display: block;
+            color: var(--error);
+            font-size:12px;
+            margin-top:6px;
+            display:block;
         }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #a7de55;
-            color: #fff;
-            font-size: 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.25s ease, transform 0.1s ease;
+        button[type="submit"] {
+            width:100%;
+            padding:11px;
+            border-radius:8px;
+            border:0;
+            background: var(--primary);
+            color:#fff;
+            font-weight:600;
+            cursor:pointer;
+            margin-top:6px;
         }
 
-        button:hover {
-            background-color: #4451c4;
-        }
-
-        button:active {
-            transform: scale(0.98);
+        button[type="submit"]:active {
+            transform:translateY(1px);
         }
 
         .success {
-            background-color: #d1fae5;
-            border: 1px solid #10b981;
-            padding: 10px;
-            border-radius: 6px;
-            margin-bottom: 20px;
+            background: #ecfdf5;
             color: #065f46;
-            font-size: 14px;
+            border-radius:8px;
+            padding:10px;
+            font-size:14px;
+            margin-bottom:12px;
+            text-align:center;
         }
 
         footer {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 13px;
-            color: #666;
+            text-align:center;
+            margin-top:14px;
+            color:var(--muted);
+            font-size:13px;
+        }
+
+        /* 👇 Notice the double @@ */
+        @@media (max-width:420px){
+            .card { padding:20px; }
         }
     </style>
-
-    <!-- Add Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="form-container">
-        <h2><i class="fas fa-user-plus"></i> Register here</h2>
+    <div class="card">
+        <h1>Create Account</h1>
+        <p class="note">Two quick fields — fast signup.</p>
 
         @if (TempData["Success"] != null)
         {
@@ -131,32 +138,28 @@
         }
 
         <form asp-action="Register" method="post">
-            <div class="form-group">
-                <label asp-for="Name"></label>
-                <i class="fas fa-user icon"></i>
-                <input asp-for="Name" type="text" placeholder="Enter your full name" />
+            @Html.AntiForgeryToken()
+
+            <div class="field">
+                <label asp-for="Name">Full name</label>
+                <input asp-for="Name" type="text" placeholder="Jane Doe" />
                 <span asp-validation-for="Name" class="error"></span>
             </div>
 
-            <div class="form-group">
-                <label asp-for="PhoneNumber"></label>
-                <i class="fas fa-phone icon"></i>
-                <input asp-for="PhoneNumber" type="tel" placeholder="Enter your phone number" />
+            <div class="field">
+                <label asp-for="PhoneNumber">Phone number</label>
+                <input asp-for="PhoneNumber" type="tel" placeholder="+355 4xx xxx xxx" />
                 <span asp-validation-for="PhoneNumber" class="error"></span>
             </div>
 
-            <button type="submit">
-                <i class="fas fa-paper-plane"></i> Submit Form
-            </button>
+            <button type="submit">Submit</button>
         </form>
 
         <footer>
-            <p>Feel free to reach out to us</p>
+            Need help? <a href="/contact">Contact support</a>
         </footer>
     </div>
 
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-    }
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>
