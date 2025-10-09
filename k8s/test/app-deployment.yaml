@@ -15,15 +15,13 @@ spec:
         app: registration-form-app
     spec:
       containers:
-        - name: registration-form-app
-          # Use the full ACR path here
-          image: dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)
-          ports:
-            - containerPort: 80
-          envFrom:
-            - secretRef:
-                name: app-secrets
-          imagePullSecrets:
-            - name: acr-secret 
-      # No need for imagePullSecrets since ACR is attached
+      - name: registration-form-app
+        image: dockerappregistry1.azurecr.io/registration-form-app:$(Build.BuildId)
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+            name: app-secrets
+      imagePullSecrets:            # ✅ correct: same level as containers
+      - name: acr-secret
       restartPolicy: Always
