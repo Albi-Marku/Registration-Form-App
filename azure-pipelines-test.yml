@@ -39,6 +39,24 @@ stages:
       runOnce:
         deploy:
           steps:
+
+          
+
+            - task: KubernetesManifest@1
+              displayName: Apply Kubernetes Secrets for Test
+              inputs:
+                action: 'deploy'
+                connectionType: 'azureResourceManager'
+                azureSubscriptionConnection: 'Azure-Connection-test-environment'
+                azureResourceGroup: 'myapp-test-rg'
+                kubernetesCluster: 'myapp-aks-test'
+                manifests: |
+                  k8s/test/secret.yaml
+              env:
+                POSTGRES_TEST_USER: $(POSTGRES_TEST_USER)
+                POSTGRES_TEST_PASSWORD: $(POSTGRES_TEST_PASSWORD)  
+
+
             - task: KubernetesManifest@1
               displayName: Deploy test cluster to AKS test resources
               inputs:
